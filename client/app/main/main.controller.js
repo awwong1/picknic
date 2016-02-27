@@ -90,13 +90,13 @@
 					resultsMap.setCenter(results[0].geometry.location);
 					if ('id' in this.marker) {
 						this.marker.coords = {
-							latitude: results[0].geometry.location.G,
-							longitude: results[0].geometry.location.K
+							latitude: results[0].geometry.location.lat(),
+							longitude: results[0].geometry.location.lng()
 						};
 					}
 					this.marker.options = { icon: '/assets/images/marker32.png' };
-					this.circles[0].center.latitude = results[0].geometry.location.G;
-					this.circles[0].center.longitude = results[0].geometry.location.K;
+					this.circles[0].center.latitude = results[0].geometry.location.lat();
+					this.circles[0].center.longitude = results[0].geometry.location.lng();
 					this.handleEntities();
 				} else {
 					alert('Geocode was not successful for the following reason: ' + status);
