@@ -37,9 +37,9 @@ Running `npm test` will run the unit tests with karma.
 * To enable the polygon drawing, must modify the angular-google-maps.js bower component in client
 ```
 nano client/bower_components/angular-google-maps/dist/angular-google-maps.js
-# go to line 1295
+# go to line 1300
 # Change:
-#              _.forEach(path.coordinates, function (polygon, index) {
+#              }, trackMaxVertices);
 # To:
-#              _.forEach(path.coordinates, (polygon, index) => {
+#              }.bind(this), trackMaxVertices);
 ```
