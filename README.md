@@ -12,6 +12,8 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 - [Ruby](https://www.ruby-lang.org) and then `gem install sass`
 - [Grunt](http://gruntjs.com/) (`npm install --global grunt-cli`)
 - [MongoDB](https://www.mongodb.org/) - Keep a running daemon with `mongod`
+- [Pip](https://pip.pypa.io/en/stable/installing/) - package installer for Python (will need to manually install for windows)
+- [pymongo](https://docs.mongodb.org/getting-started/python/client/)
 
 ### Developing
 
@@ -22,6 +24,18 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 3. Run `mongod` in a separate shell to keep an instance of the MongoDB Daemon running
 
 4. Run `grunt serve` to start the development server. It should automatically open the client in your browser when ready.
+
+## Python Dependancies
+1. Install pip if you do not have it by following the link. Note for windows config
+
+2. Run `pip install pymongo` to install pymongo
+
+## Filling your MongolDB with Data
+
+1. cd to <Project Path>/scripts/data and run `python <script>`
+
+2. Use `python parklands.py` and `python trees.py` to start
+
 
 ## Build & development
 
