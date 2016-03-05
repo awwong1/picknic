@@ -166,7 +166,7 @@
         this.trees_cache = response.data.trees;
         this.playgrounds = response.data.playgrounds;
         this.spray_parks = response.data.spray_parks;
-        this.soccerFieldsCache = response.data.soccer_field;
+        this.soccerFieldsCache = response.data.soccer_fields;
       });
     }
 
@@ -182,7 +182,13 @@
 
     addOrRmSFields() {
       if (this.formData.soccerFields === "yes") {
+        console.log(this.soccerFieldsCache);
+        this.soccerFields = this.soccerFieldsCache;
+        this.soccerFieldsCache = [];
       } else {
+        this.soccerFieldsCache = this.soccerFields;
+        console.log(this.soccerFieldsCache);
+        this.soccerFields = [];
       }
     }
 
