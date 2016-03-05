@@ -178,9 +178,7 @@
     addOrRmTrees() {
       if (this.formData.trees === "yes") {
         this.trees = this.trees_cache;
-        this.trees_cache = []
       } else {
-        this.trees_cache = this.trees;
         this.trees = [];
       }
     }
@@ -189,10 +187,7 @@
       if (this.formData.soccerFields === "yes") {
         console.log(this.soccerFieldsCache);
         this.soccerFields = this.soccerFieldsCache;
-        this.soccerFieldsCache = [];
       } else {
-        this.soccerFieldsCache = this.soccerFields;
-        console.log(this.soccerFieldsCache);
         this.soccerFields = [];
       }
     }
