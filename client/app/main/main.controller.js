@@ -9,6 +9,7 @@
       this.awesomeThings = [];
       this.parks = [];
       this.trees = [];
+      this.trees_cache = [];
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
@@ -160,10 +161,21 @@
       this.spray_parks = [];
       this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
         this.parks = response.data.parklands;
-        this.trees = response.data.trees;
+        this.trees_cache = response.data.trees;
         this.playgrounds = response.data.playgrounds;
         this.spray_parks = response.data.spray_parks;
       });
+    }
+
+    addOrRmTrees() {
+      // Think of better way to do this
+      if (this.formData.trees === "yes") {
+        this.trees = this.trees_cache;
+        this.trees_cache = []
+      } else {
+        this.trees_cache = this.trees;
+        this.trees = [];
+      }
     }
 
     addThing() {

@@ -57,14 +57,14 @@
     </div>
     </div>
 
-  <label>Trees? <i class="fa fa-tree"></i> {{main.formData.trees}} </label>
+  <label>Show Trees? <i class="fa fa-tree"></i> {{main.formData.trees}} </label>
   <div class="form-group">
       <label class="radio-inline">
-        <input type="radio" name="trees" value="yes" ng-model="main.formData.trees">
+        <input type="radio" name="trees" value="yes" ng-model="main.formData.trees" ng-click="main.addOrRmTrees()">
         Show Me The Trees!
       </label>
       <label class="radio-inline">
-        <input type="radio" name="trees" value="no" ng-model="main.formData.trees">
+        <input type="radio" name="trees" value="no" ng-model="main.formData.trees" ng-click="main.addOrRmTrees()">
         Don't Display
       </label>
   </div>
