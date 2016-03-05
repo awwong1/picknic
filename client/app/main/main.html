@@ -31,12 +31,13 @@
                    fill="main.fill"
                    stroke="{ color: '#2c8aa7', weight: 3, opacity: '1.0' }" visible="true" geodesic="true" fit="false"
                    editable="false" static="true" ng-cloak=""></ui-gmap-polygon>
-  <ui-gmap-markers idKey="'_id'" models="main.trees" coords="'location'"
-                   options="main.tree_options"></ui-gmap-markers>
+
   <ui-gmap-markers idKey="'_id'" models="main.playgrounds" coords="'location'"
                    options="main.playground_options"></ui-gmap-markers>
   <ui-gmap-markers idKey="'_id'" models="main.spray_parks" coords="'location'"
                    options="main.spray_park_options"></ui-gmap-markers>
+  <ui-gmap-markers idKey="'_id'" models="main.trees" coords="'location'"
+                   options="main.tree_options"></ui-gmap-markers>
 </ui-gmap-google-map>
 
 
@@ -125,7 +126,7 @@
     };
     (function() {
         var d = document, s = d.createElement('script');
-        s.src = '//picknic.disqus.com/embed.js'; 
+        s.src = '//picknic.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

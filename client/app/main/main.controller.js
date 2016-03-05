@@ -25,26 +25,26 @@
       this.treeslider = 50;
       this.marker = {
         id: 'me',
-        coords: {latitude: 53.5, longitude: -113.5},
-        options: {icon: '/assets/images/marker32.png'}
+        coords: { latitude: 53.5, longitude: -113.5 },
+        options: { icon: '/assets/images/marker40.png' }
       };
       this.options = {};
       this.browserSupportFlag = Boolean();
       this.initialLocation = {};
-      this.formData = {children: ""};
+      this.formData = { children: "" };
       this.weather = {};
 
       // created after tiles loaded
       this.g_map_obj = {};
       this.map = {
-        center: {latitude: 53.5333, longitude: -113.5000}, zoom: 14,
+        center: { latitude: 53.5333, longitude: -113.5000 }, zoom: 14,
         events: {
           tilesloaded: (map) => {
             this.g_map_obj = map;
           }
         }
       };
-      this.options = {scrollwheel: false};
+      this.options = { scrollwheel: false };
 
       //Range Slider
       this.circles = [
@@ -53,9 +53,9 @@
           center: {
             latitude: 53.5, longitude: -113.5
           },
-          radius: 1000, stroke: {color: '#ffcccc', weight: 3, opacity: 1},
+          radius: 1000, stroke: { color: '#FFF', weight: 3, opacity: 1 },
           fill: {
-            color: '#ffcccc', opacity: 0.25
+            color: '#ffcccc', opacity: 0.40
           }
         }
       ];
@@ -83,26 +83,26 @@
       });
     }
 
-		geocodeAddress(geocoder, resultsMap) {
-			var address = document.getElementById('address').value;
-			geocoder.geocode({'address': address}, (results, status) => {
-				if (status === google.maps.GeocoderStatus.OK) {
-					resultsMap.setCenter(results[0].geometry.location);
-					if ('id' in this.marker) {
-						this.marker.coords = {
-							latitude: results[0].geometry.location.lat(),
-							longitude: results[0].geometry.location.lng()
-						};
-					}
-					this.marker.options = { icon: '/assets/images/marker32.png' };
-					this.circles[0].center.latitude = results[0].geometry.location.lat();
-					this.circles[0].center.longitude = results[0].geometry.location.lng();
-					this.handleEntities();
-				} else {
-					alert('Geocode was not successful for the following reason: ' + status);
-				}
-			});
-		}
+    geocodeAddress(geocoder, resultsMap) {
+      var address = document.getElementById('address').value;
+      geocoder.geocode({ 'address': address }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          resultsMap.setCenter(results[0].geometry.location);
+          if ('id' in this.marker) {
+            this.marker.coords = {
+              latitude: results[0].geometry.location.lat(),
+              longitude: results[0].geometry.location.lng()
+            };
+          }
+          this.marker.options = { icon: '/assets/images/marker40.png' };
+          this.circles[0].center.latitude = results[0].geometry.location.lat();
+          this.circles[0].center.longitude = results[0].geometry.location.lng();
+          this.handleEntities();
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
 
     handleGeoLocation() {
       /**
@@ -116,9 +116,9 @@
           this.g_map_obj.setCenter(this.initialLocation);
           this.marker = {
             id: 'me',
-            coords: {latitude: position.coords.latitude, longitude: position.coords.longitude},
+            coords: { latitude: position.coords.latitude, longitude: position.coords.longitude },
             options: {
-              icon: '/assets/images/marker32.png'
+              icon: '/assets/images/marker40.png'
             }
           };
           //Set Circle
@@ -168,21 +168,21 @@
 
     addThing() {
       if (this.newThing) {
-        this.$http.post('/api/things', {name: this.newThing});
+        this.$http.post('/api/things', { name: this.newThing });
         this.newThing = '';
       }
     }
 
     sliderChange() {
       this.circles[0].radius = Number(this.slider);
-//      this.handleEntities();
+      //      this.handleEntities();
     }
 
     deleteThing(thing) {
       this.$http.delete('/api/things/' + thing._id);
     }
 
-    autoComplete(){
+    autoComplete() {
       var input = document.getElementById("address");
       var autocomplete = new google.maps.places.Autocomplete(input);
       //autocomplete.bindTo('bounds', map);
