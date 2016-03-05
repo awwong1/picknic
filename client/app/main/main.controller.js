@@ -21,6 +21,9 @@
       this.spray_park_options = {
         icon: '/assets/images/spraypark.png'
       };
+      this.picnic_table_options = {
+        icon: '/assets/images/table29.png'
+      };
       this.soccer_field_options = {
         icon: '/assets/images/soccer.png'
       };
@@ -161,10 +164,12 @@
       this.trees = [];
       this.playgrounds = [];
       this.spray_parks = [];
+      this.picnic_tables = [];
       this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
         this.parks = response.data.parklands;
         this.trees_cache = response.data.trees;
         this.playgrounds = response.data.playgrounds;
+        this.picnic_tables = response.data.picnic_tables;
         this.spray_parks = response.data.spray_parks;
         this.soccerFieldsCache = response.data.soccer_fields;
       });
