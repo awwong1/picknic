@@ -15,6 +15,7 @@ var Playground = require('../playground/playground.model');
 var Recommendation = require('./recommendation.model');
 var SprayPark = require('../spray_park/spray_park.model');
 var PicnicTable = require('../picnic_table/picnic_table.model');
+var SoccerField = require('../soccer_field/soccer_field.model');
 var Tree = require('../tree/tree.model');
 
 function handleError(res, statusCode) {
@@ -112,6 +113,11 @@ exports.location = function(req, res) {
   var picnic_tables = PicnicTable.find().where('location').within()
   .geometry(search_polygon).lean().exec(function(picnic_table_err, picnic_table_ret){
   if(picnic_table_err) return handleError(picnic_table_err);     
+  
+  // Soccer Field
+  var soccer_fields = SoccerField.find().where('location').within()
+  .geometry(search_polygon).lean().exec(function(soccer_field_err, soccer_field_ret){
+  if(soccer_field_err) return handleError(soccer_field_err);     
  
   // Trees
   var trees = []
@@ -136,6 +142,7 @@ exports.location = function(req, res) {
   }
 
    }); // Picnic Tables
+   }); // Soccer Field
    }); // Spray Parks
    }); // Playgrounds
    }); // Parklands
