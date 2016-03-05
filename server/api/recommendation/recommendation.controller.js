@@ -134,8 +134,10 @@ exports.location = function(req, res) {
         res.json({
           parklands: parkland_ret,
           trees: trees,
+          picnic_tables: picnic_table_ret,
           playgrounds: playground_ret,
-          spray_parks: spray_park_ret
+          spray_parks: spray_park_ret,
+          soccer_fields: soccer_fields_ret,
         });
       }
      }); // Trees
