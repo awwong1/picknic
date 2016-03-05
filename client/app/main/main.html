@@ -61,12 +61,27 @@
   <div class="form-group">
       <label class="radio-inline">
         <input type="radio" name="trees" value="yes" ng-model="main.formData.trees" ng-click="main.addOrRmTrees()">
-        Show Me The Trees!
+        Yes
       </label>
+
       <label class="radio-inline">
         <input type="radio" name="trees" value="no" ng-model="main.formData.trees" ng-click="main.addOrRmTrees()">
-        Don't Display
+        No
       </label>
+  </div>
+
+  <label>Show Soccer Fields? <i class="fa fa-futbol-o"></i> {{main.formData.soccerFields}} </label>
+  <div class="form-group">
+    <label class="radio-inline">
+    <input type="radio" name="soccerFields" value="yes" ng-model="main.formData.soccerFields" ng-click="main.addOrRmSFields()">
+    Yes
+    </label>
+
+    <label class="radio-inline">
+      <input type="radio" name="soccerFields" value="no" ng-model="main.formData.soccerFields" ng-click="main.addOrRmSFields()">
+      No
+    </label>
+
   </div>
 
       <label>Children? <i class="fa fa-child"></i> {{main.formData.children}} </label>

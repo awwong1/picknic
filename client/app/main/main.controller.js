@@ -10,6 +10,8 @@
       this.parks = [];
       this.trees = [];
       this.trees_cache = [];
+      this.soccerFields = [];
+      this.soccerFieldsCache = [];
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
@@ -164,17 +166,23 @@
         this.trees_cache = response.data.trees;
         this.playgrounds = response.data.playgrounds;
         this.spray_parks = response.data.spray_parks;
+        this.soccerFieldsCache = response.data.soccer_field;
       });
     }
 
     addOrRmTrees() {
-      // Think of better way to do this
       if (this.formData.trees === "yes") {
         this.trees = this.trees_cache;
         this.trees_cache = []
       } else {
         this.trees_cache = this.trees;
         this.trees = [];
+      }
+    }
+
+    addOrRmSFields() {
+      if (this.formData.soccerFields === "yes") {
+      } else {
       }
     }
 

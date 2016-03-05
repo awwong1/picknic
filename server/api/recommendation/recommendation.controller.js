@@ -112,13 +112,13 @@ exports.location = function(req, res) {
   // Picnic Tables
   var picnic_tables = PicnicTable.find().where('location').within()
   .geometry(search_polygon).lean().exec(function(picnic_table_err, picnic_table_ret){
-  if(picnic_table_err) return handleError(picnic_table_err);     
-  
+  if(picnic_table_err) return handleError(picnic_table_err);
+
   // Soccer Field
   var soccer_fields = SoccerField.find().where('location').within()
   .geometry(search_polygon).lean().exec(function(soccer_field_err, soccer_field_ret){
-  if(soccer_field_err) return handleError(soccer_field_err);     
- 
+  if(soccer_field_err) return handleError(soccer_field_err);
+
   // Trees
   var trees = []
   var num_things = parkland_ret.length;
@@ -135,7 +135,8 @@ exports.location = function(req, res) {
           parklands: parkland_ret,
           trees: trees,
           playgrounds: playground_ret,
-          spray_parks: spray_park_ret
+          spray_parks: spray_park_ret,
+          soccer_fields: soccer_field_ret
         });
       }
      }); // Trees
