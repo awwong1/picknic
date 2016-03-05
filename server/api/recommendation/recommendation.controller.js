@@ -137,7 +137,7 @@ exports.location = function(req, res) {
           picnic_tables: picnic_table_ret,
           playgrounds: playground_ret,
           spray_parks: spray_park_ret,
-          soccer_fields: soccer_fields_ret,
+          soccer_fields: soccer_field_ret,
         });
       }
      }); // Trees
