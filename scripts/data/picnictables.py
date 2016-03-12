@@ -30,7 +30,7 @@ for column in obj["meta"]["view"]["columns"]:
 
 # Set Up Mongo Connection
 mongo = pymongo.MongoClient()
-db = mongo["picknic"]
+db = mongo["picknic-dev"]
 picnic_tables = db["picnictables"]
 
 # Clear all existing picnic_tables

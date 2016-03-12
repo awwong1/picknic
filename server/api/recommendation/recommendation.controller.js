@@ -138,7 +138,6 @@ exports.location = function(req, res) {
           playgrounds: playground_ret,
           spray_parks: spray_park_ret,
           soccer_fields: soccer_field_ret
-
         });
       }
      }); // Trees

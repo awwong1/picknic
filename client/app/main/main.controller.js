@@ -155,6 +155,22 @@
       this.g_map_obj.setCenter(this.initialLocation);
     }
 
+    addOrRmTrees() {
+      if (this.formData.trees === "true") {
+        this.trees = this.trees_cache;
+      } else {
+        this.trees = [];
+      }
+    }
+
+    addOrRmSFields() {
+      if (this.formData.soccerFields === "yes") {
+        this.soccerFields = this.soccerFieldsCache;
+      } else {
+        this.soccerFields = [];
+      }
+    }
+
     handleEntities() {
       // TODO: LINE 1295 of angular-google-maps.js CHANGE TO ARROW NOTATION, read README
       var lat = this.circles[0].center.latitude;
@@ -167,29 +183,28 @@
       this.picnic_tables = [];
       this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
         this.parks = response.data.parklands;
+
         this.trees_cache = response.data.trees;
+
+        if (this.formData.trees === "true") {
+          this.trees = this.trees_cache;
+        } else {
+          this.trees = [];
+        }
+
         this.playgrounds = response.data.playgrounds;
         this.picnic_tables = response.data.picnic_tables;
         this.spray_parks = response.data.spray_parks;
         this.soccerFieldsCache = response.data.soccer_fields;
+
+        if (this.formData.soccerFields === "yes") {
+          this.soccerFields = this.soccerFieldsCache;
+        } else {
+          this.soccerFields = [];
+        }
       });
-    }
 
-    addOrRmTrees() {
-      if (this.formData.trees === "yes") {
-        this.trees = this.trees_cache;
-      } else {
-        this.trees = [];
-      }
-    }
 
-    addOrRmSFields() {
-      if (this.formData.soccerFields === "yes") {
-        console.log(this.soccerFieldsCache);
-        this.soccerFields = this.soccerFieldsCache;
-      } else {
-        this.soccerFields = [];
-      }
     }
 
     addThing() {

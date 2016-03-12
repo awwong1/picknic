@@ -64,12 +64,12 @@
   <label>Show Trees? <i class="fa fa-tree"></i> {{main.formData.trees}} </label>
   <div class="form-group">
       <label class="radio-inline">
-        <input type="radio" name="trees" value="yes" ng-model="main.formData.trees" ng-click="main.addOrRmTrees()">
+        <input type="radio" name="trees" value="true" ng-model="main.formData.trees" ng-change="main.addOrRmTrees()">
         Yes
       </label>
 
       <label class="radio-inline">
-        <input type="radio" name="trees" value="no" ng-model="main.formData.trees" ng-click="main.addOrRmTrees()">
+        <input type="radio" name="trees" value="false" ng-model="main.formData.trees" ng-change="main.addOrRmTrees()">
         No
       </label>
   </div>
@@ -77,12 +77,12 @@
   <label>Show Soccer Fields? <i class="fa fa-futbol-o"></i> {{main.formData.soccerFields}} </label>
   <div class="form-group">
     <label class="radio-inline">
-    <input type="radio" name="soccerFields" value="yes" ng-model="main.formData.soccerFields" ng-click="main.addOrRmSFields()">
+    <input type="radio" name="soccerFields" value="yes" ng-model="main.formData.soccerFields">
     Yes
     </label>
 
     <label class="radio-inline">
-      <input type="radio" name="soccerFields" value="no" ng-model="main.formData.soccerFields" ng-click="main.addOrRmSFields()">
+      <input type="radio" name="soccerFields" value="no" ng-model="main.formData.soccerFields">
       No
     </label>
 
