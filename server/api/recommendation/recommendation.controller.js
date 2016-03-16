@@ -14,6 +14,8 @@ var Parkland = require('../parkland/parkland.model');
 var Playground = require('../playground/playground.model');
 var Recommendation = require('./recommendation.model');
 var SprayPark = require('../spray_park/spray_park.model');
+var PicnicTable = require('../picnic_table/picnic_table.model');
+var SoccerField = require('../soccer_field/soccer_field.model');
 var Tree = require('../tree/tree.model');
 
 function handleError(res, statusCode) {
@@ -66,11 +68,11 @@ function removeEntity(res) {
 // Handles location recommendations
 exports.location = function(req, res) {
   var query_dict = req.query;
-  
+
   // Lat & Long
   var latitude = Number(req.params.latitude);
   var longitude = Number(req.params.longitude);
-  
+
   // Radius for recommendations
   if('radius' in query_dict) {
     // Use the user's
@@ -80,7 +82,7 @@ exports.location = function(req, res) {
     var radius = 1.0;
   }
   var degrees_radius = radius * (1 / 110.574);
-  
+
   // TODO: Change from a square to a circle to match the picture
   var search_square = [[
     [longitude - degrees_radius, latitude - degrees_radius],
@@ -90,7 +92,7 @@ exports.location = function(req, res) {
     [longitude - degrees_radius, latitude - degrees_radius]
   ]];
   var search_polygon = {type: 'Polygon', coordinates: search_square};
-  
+
   // Parklands
   // TODO: figure out duplicate so i can exclude id...
   var parklands = Parkland.find().where('geometry').intersects()
@@ -107,6 +109,16 @@ exports.location = function(req, res) {
    .geometry(search_polygon).lean().exec(function(spray_park_err, spray_park_ret) {
     if(spray_park_err) return handleError(spray_park_err);
 
+  // Picnic Tables
+  var picnic_tables = PicnicTable.find().where('location').within()
+  .geometry(search_polygon).lean().exec(function(picnic_table_err, picnic_table_ret){
+  if(picnic_table_err) return handleError(picnic_table_err);
+
+  // Soccer Field
+  var soccer_fields = SoccerField.find().where('location').within()
+  .geometry(search_polygon).lean().exec(function(soccer_field_err, soccer_field_ret){
+  if(soccer_field_err) return handleError(soccer_field_err);
+
   // Trees
   var trees = []
   var num_things = parkland_ret.length;
@@ -114,7 +126,7 @@ exports.location = function(req, res) {
     // Find trees within parkland
     var sub_trees = Tree.find()
      .where('location').within().geometry(parkland.geometry).lean().exec(function(tree_err, tree_ret) {
-      if(tree_err) return handleError(tree_err);    
+      if(tree_err) return handleError(tree_err);
       trees = trees.concat(tree_ret);
       num_things -= 1;
       if(num_things == 0) {
@@ -122,14 +134,17 @@ exports.location = function(req, res) {
         res.json({
           parklands: parkland_ret,
           trees: trees,
+          picnic_tables: picnic_table_ret,
           playgrounds: playground_ret,
-          spray_parks: spray_park_ret
+          spray_parks: spray_park_ret,
+          soccer_fields: soccer_field_ret
         });
       }
      }); // Trees
   }
 
-
+   }); // Picnic Tables
+   }); // Soccer Field
    }); // Spray Parks
    }); // Playgrounds
    }); // Parklands

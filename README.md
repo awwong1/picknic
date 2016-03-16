@@ -1,10 +1,4 @@
-# Picknic
-
-![Picknic Screenshot](/Picknic.png "Picknic Screenshot")
-
-HackED Hackathon 2016 Submission.
-
-Locally sourced data and free range programmers provide high quality cruelty free picnic recommendations.
+# picknic
 
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.0.0.
 
@@ -18,6 +12,8 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 - [Ruby](https://www.ruby-lang.org) and then `gem install sass`
 - [Grunt](http://gruntjs.com/) (`npm install --global grunt-cli`)
 - [MongoDB](https://www.mongodb.org/) - Keep a running daemon with `mongod`
+- [Pip](https://pip.pypa.io/en/stable/installing/) - package installer for Python (will need to manually install for windows)
+- [pymongo](https://docs.mongodb.org/getting-started/python/client/)
 
 ### Developing
 
@@ -28,6 +24,18 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 3. Run `mongod` in a separate shell to keep an instance of the MongoDB Daemon running
 
 4. Run `grunt serve` to start the development server. It should automatically open the client in your browser when ready.
+
+## Python Dependancies
+1. Install pip if you do not have it by following the link. Note for windows config
+
+2. Run `pip install pymongo` to install pymongo
+
+## Filling your MongolDB with Data
+
+1. cd to <Project Path>/scripts/data and run `python <script>`
+
+2. Use `python parklands.py` and `python trees.py` to start
+
 
 ## Build & development
 
@@ -43,9 +51,9 @@ Running `npm test` will run the unit tests with karma.
 * To enable the polygon drawing, must modify the angular-google-maps.js bower component in client
 ```
 nano client/bower_components/angular-google-maps/dist/angular-google-maps.js
-# go to line 1295
+# go to line 1300
 # Change:
-#              _.forEach(path.coordinates, function (polygon, index) {
+#              }, trackMaxVertices);
 # To:
-#              _.forEach(path.coordinates, (polygon, index) => {
+#              }.bind(this), trackMaxVertices);
 ```

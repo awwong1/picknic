@@ -30,8 +30,8 @@ for column in obj["meta"]["view"]["columns"]:
 
 # Set Up Mongo Connection
 mongo = pymongo.MongoClient()
-db = mongo.picknic
-soccer_fields = db.soccer_fields
+db = mongo["picknic-dev"]
+soccer_fields = db["soccerfields"]
 
 # Clear all existing soccer_fields
 print("Removing existing 'soccer fields' data...")

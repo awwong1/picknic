@@ -4,14 +4,14 @@
 
   class MainController {
 
-    constructor($http, $modal, uiGmapGoogleMapApi) {
+    constructor($http, uiGmapGoogleMapApi) {
       this.$http = $http;
-      this.$modal = $modal;
       this.awesomeThings = [];
       this.parks = [];
       this.trees = [];
-      this.res = [];
-      this.$modalInstance = {};
+      this.trees_cache = [];
+      this.soccerFields = [];
+      this.soccerFieldsCache = [];
       this.tree_options = {
         icon: '/assets/images/tree16.png'
       };
@@ -21,35 +21,37 @@
       this.spray_park_options = {
         icon: '/assets/images/spraypark.png'
       };
+      this.picnic_table_options = {
+        icon: '/assets/images/table29.png'
+      };
       this.soccer_field_options = {
         icon: '/assets/images/soccer.png'
       };
       this.fill = { color: '#2c8aa7', opacity: '0.3' };
       this.treeslider = 50;
+      this.slider = 1000;
       this.marker = {
         id: 'me',
-        coords: {latitude: 53.5, longitude: -113.5},
-        options: {icon: '/assets/images/marker32.png'}
+        coords: { latitude: 53.5, longitude: -113.5 },
+        options: { icon: '/assets/images/marker40.png' }
       };
       this.options = {};
       this.browserSupportFlag = Boolean();
       this.initialLocation = {};
-      this.formData = {children: ""};
+      this.formData = { children: "" };
       this.weather = {};
-
-      this.events = {click : function() {console.log("CLICK");}};
 
       // created after tiles loaded
       this.g_map_obj = {};
       this.map = {
-        center: {latitude: 53.5333, longitude: -113.5000}, zoom: 14,
+        center: { latitude: 53.5333, longitude: -113.5000 }, zoom: 14,
         events: {
           tilesloaded: (map) => {
             this.g_map_obj = map;
           }
         }
       };
-      this.options = {scrollwheel: false};
+      this.options = { scrollwheel: false };
 
       //Range Slider
       this.circles = [
@@ -58,9 +60,9 @@
           center: {
             latitude: 53.5, longitude: -113.5
           },
-          radius: 1000, stroke: {color: '#ffcccc', weight: 3, opacity: 1},
+          radius: 1000, stroke: { color: '#FFF', weight: 3, opacity: 1 },
           fill: {
-            color: '#ffcccc', opacity: 0.25
+            color: '#ffcccc', opacity: 0.40
           }
         }
       ];
@@ -88,26 +90,26 @@
       });
     }
 
-		geocodeAddress(geocoder, resultsMap) {
-			var address = document.getElementById('address').value;
-			geocoder.geocode({'address': address}, (results, status) => {
-				if (status === google.maps.GeocoderStatus.OK) {
-					resultsMap.setCenter(results[0].geometry.location);
-					if ('id' in this.marker) {
-						this.marker.coords = {
-							latitude: results[0].geometry.location.G,
-							longitude: results[0].geometry.location.K
-						};
-					}
-					this.marker.options = { icon: '/assets/images/marker32.png' };
-					this.circles[0].center.latitude = results[0].geometry.location.G;
-					this.circles[0].center.longitude = results[0].geometry.location.K;
-					this.handleEntities();
-				} else {
-					alert('Geocode was not successful for the following reason: ' + status);
-				}
-			});
-		}
+    geocodeAddress(geocoder, resultsMap) {
+      var address = document.getElementById('address').value;
+      geocoder.geocode({ 'address': address }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          resultsMap.setCenter(results[0].geometry.location);
+          if ('id' in this.marker) {
+            this.marker.coords = {
+              latitude: results[0].geometry.location.lat(),
+              longitude: results[0].geometry.location.lng()
+            };
+          }
+          this.marker.options = { icon: '/assets/images/marker40.png' };
+          this.circles[0].center.latitude = results[0].geometry.location.lat();
+          this.circles[0].center.longitude = results[0].geometry.location.lng();
+          this.handleEntities();
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
 
     handleGeoLocation() {
       /**
@@ -121,9 +123,9 @@
           this.g_map_obj.setCenter(this.initialLocation);
           this.marker = {
             id: 'me',
-            coords: {latitude: position.coords.latitude, longitude: position.coords.longitude},
+            coords: { latitude: position.coords.latitude, longitude: position.coords.longitude },
             options: {
-              icon: '/assets/images/marker32.png'
+              icon: '/assets/images/marker40.png'
             }
           };
           //Set Circle
@@ -154,74 +156,75 @@
       this.g_map_obj.setCenter(this.initialLocation);
     }
 
+    addOrRmTrees() {
+      if (this.formData.trees === "true") {
+        this.trees = this.trees_cache;
+      } else {
+        this.trees = [];
+      }
+    }
+
+    addOrRmSFields() {
+      if (this.formData.soccerFields === "yes") {
+        this.soccerFields = this.soccerFieldsCache;
+      } else {
+        this.soccerFields = [];
+      }
+    }
+
     handleEntities() {
       // TODO: LINE 1295 of angular-google-maps.js CHANGE TO ARROW NOTATION, read README
       var lat = this.circles[0].center.latitude;
       var lng = this.circles[0].center.longitude;
       var radius = Number(this.circles[0].radius) / 1000;
       this.parks = [];
-      this.$http.get('/api/parklands/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
-        this.res = response.data;
-        
-        this.parks = this.res;
-      }).then( () => {
-        for (var i = 0; i < this.res.length; i++) {
-          var t_res = this.parks[i];
-          this.res[i].events = { click : () => { 
-            this.$modalInstance = this.$modal.open({
-              animation: true,
-              templateUrl: 'myModalContent.html',
-              size: "lg",
-              resolve: {
-                stuff : function() {return "Asdfsadf";}
-              }
-            })
-          }};
-        };
-      });
-
-    }
-
-    ok() {
-      this.$modalInstance.close($scope.selected.item);
-    };
-
-    cancel() {
-        this.$modalInstance.dismiss('cancel');
-    };
-
-    handleTrees() {
-      var lat = this.circles[0].center.latitude;
-      var lng = this.circles[0].center.longitude;
-      var radius = Number(this.circles[0].radius) / 1000;
       this.trees = [];
       this.playgrounds = [];
       this.spray_parks = [];
+      this.picnic_tables = [];
       this.$http.get('/api/recommendations/' + lng.toString() + '/' + lat.toString() + '?radius=' + radius.toString()).then(response => {
         this.parks = response.data.parklands;
-        this.trees = response.data.trees;
+
+        this.trees_cache = response.data.trees;
+
+        if (this.formData.trees === "true") {
+          this.trees = this.trees_cache;
+        } else {
+          this.trees = [];
+        }
+
         this.playgrounds = response.data.playgrounds;
+        this.picnic_tables = response.data.picnic_tables;
         this.spray_parks = response.data.spray_parks;
+        this.soccerFieldsCache = response.data.soccer_fields;
+
+        if (this.formData.soccerFields === "yes") {
+          this.soccerFields = this.soccerFieldsCache;
+        } else {
+          this.soccerFields = [];
+        }
       });
+
+
     }
 
     addThing() {
       if (this.newThing) {
-        this.$http.post('/api/things', {name: this.newThing});
+        this.$http.post('/api/things', { name: this.newThing });
         this.newThing = '';
       }
     }
 
     sliderChange() {
       this.circles[0].radius = Number(this.slider);
-      this.handleEntities();
+      //      this.handleEntities();
     }
 
     deleteThing(thing) {
       this.$http.delete('/api/things/' + thing._id);
     }
 
-    autoComplete(){
+    autoComplete() {
       var input = document.getElementById("address");
       var autocomplete = new google.maps.places.Autocomplete(input);
       //autocomplete.bindTo('bounds', map);
